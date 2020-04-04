@@ -1,5 +1,5 @@
 {
-  "watch": ["server/src"],
+  "watch": ["src"],
   "ignore": [".git", "node_modules/**/node_modules"],
   "verbose": true,
   "ext": "json,js,ts",

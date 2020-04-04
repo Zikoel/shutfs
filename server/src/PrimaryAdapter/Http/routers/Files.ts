@@ -11,7 +11,7 @@ export const FilesRouter = ({
 }: PublicFilesRouterConfig): Router => {
   const router = Router()
 
-  router.get('files', (_, res, next) => {
+  router.get('/files', (_, res, next) => {
     application.queries
       .avaialableFiles(null)
       .then(result =>

@@ -2,7 +2,7 @@ import D from 'debug'
 import fs from 'fs'
 import { Fs } from 'Application/ports'
 
-const debug = D('secondaryAdapters:LocalFileStorage')
+const debug = D('secondaryAdapters:local-file-storage')
 
 export interface FileStorage {
   createNewFile: (
@@ -19,10 +19,10 @@ export const createLocalFileStorage = (storagePath: string): Fs => {
 
   return {
     allFiles: async () => {
-      return fs.readdirSync(storagePath).map(file => {
-        const stats = fs.statSync(file)
+      return fs.readdirSync(storagePath).map(fileName => {
+        const stats = fs.statSync(`${storagePath}/${fileName}`)
         return {
-          name: file,
+          name: fileName,
           createdAt: stats.ctime,
           updatedAt: stats.ctime,
           size: stats.size,

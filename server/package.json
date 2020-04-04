@@ -8,6 +8,7 @@
   "license": "SEE LICENSE IN LICENZE FILE",
   "private": false,
   "scripts": {
+    "dev:start": "nodemon --exec ts-node --project tsconfig.json src/start.ts",
     "clean": "rm -rf dist",
     "build": "run-s clean && tsc -p tsconfig.json"
   },
