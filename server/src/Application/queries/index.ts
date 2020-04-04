@@ -4,7 +4,6 @@ import { Fs } from '../ports'
 
 import {
   InputValidationError,
-  validationErrorsToJsonPathErrors,
 } from '../utils/inputValidation'
 
 import D from 'debug'

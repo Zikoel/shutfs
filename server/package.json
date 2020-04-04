@@ -7,6 +7,10 @@
   "author": "Elia Mazzuoli <zikoel@gmail.com>",
   "license": "SEE LICENSE IN LICENZE FILE",
   "private": false,
+  "scripts": {
+    "clean": "rm -rf dist",
+    "build": "run-s clean && tsc -p tsconfig.json"
+  },
   "dependencies": {
     "body-parser": "^1.19.0",
     "compression": "^1.7.4",
