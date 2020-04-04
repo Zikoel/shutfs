@@ -1,0 +1,10 @@
+{
+  "watch": ["server/src"],
+  "ignore": [".git", "node_modules/**/node_modules"],
+  "verbose": true,
+  "ext": "json,js,ts",
+  "env": {
+    "NODE_ENV": "development",
+    "DEBUG": "*, -babel*, -express*, -body-parser*, -compression*"
+  }
+}
