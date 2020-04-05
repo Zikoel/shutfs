@@ -5,20 +5,19 @@ import http from 'http'
 import cors from 'cors'
 
 import { Application } from '../../Application'
-
 import { FrontendRouter } from './routers/Frontend'
-
 import { FilesRouter } from './routers/Files'
 
-const httpServerDebug = D('adapters:http')
+const debug = D('adapters:http')
 
 interface HttpServerConfig {
   isProduction: boolean
   application: Application
+  storagePath: string
 }
 
 export default function HttpServer(config: HttpServerConfig): http.Server {
-  const { isProduction, application } = config
+  const { isProduction, application, storagePath } = config
 
   const app = express()
 
@@ -28,26 +27,22 @@ export default function HttpServer(config: HttpServerConfig): http.Server {
     app.enable('trust proxy')
   }
 
-  httpServerDebug(`Adding compression middleware`)
+  debug(`Adding compression middleware`)
   app.use(compression())
 
   app.use(cors({ origin: '*' }))
 
-  httpServerDebug(`Adding PublicFiles router`)
-  app.use(
-    FilesRouter({
-      application,
-    })
-  )
+  debug(`Adding PublicFiles router`)
+  app.use('/file', FilesRouter({ application, storagePath }))
 
-  httpServerDebug(`Adding Frontend router`)
+  debug(`Adding Frontend router`)
   app.use(FrontendRouter())
 
   app.use((err: any, req: Request, res: Response) => {
-    httpServerDebug(
+    debug(
       `Uncaught HTTP error @ ${req.originalUrl}: [${err.name}] ${err.message}`
     )
-    httpServerDebug(err.stack)
+    debug(err.stack)
     res.sendStatus(err.statusCode || 500)
   })
 

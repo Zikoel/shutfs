@@ -9,11 +9,15 @@ const debug = D('start')
 const init = async () => {
   const fsAdapter = createLocalFileStorage(config.STORAGE.path)
 
-  const application = createApplication({ fs: fsAdapter })
+  const application = createApplication({
+    fs: fsAdapter,
+    appDomain: config.SERVICE.domain,
+  })
 
   const httpServer = HTTPServer({
     isProduction: config.IS_PRODUCTION,
     application,
+    storagePath: config.STORAGE.path,
   })
 
   const gracefulShutdown = (): void => {
@@ -50,6 +54,4 @@ const init = async () => {
   })
 }
 
-init()
-  .then(() => debug('quit'))
-  .catch(debug)
+init().catch(debug)

@@ -2,9 +2,7 @@ import { Either, isLeft, left, right } from 'fp-ts/lib/Either'
 import * as t from 'io-ts'
 import { Fs } from '../ports'
 
-import {
-  InputValidationError,
-} from '../utils/inputValidation'
+import { InputValidationError } from '../utils/inputValidation'
 
 import D from 'debug'
 
@@ -17,10 +15,12 @@ export type QueriesDefinitionsMap = typeof QueriesDefinitionsMap
 
 export interface QueriesFactoryDependencies {
   fs: Fs
+  appDomain: string
 }
 
 export interface QueryHandlerDependencies {
   fs: Fs
+  appDomain: string
 }
 
 export type ApplicationQueries = {
@@ -65,6 +65,7 @@ export type QueryHandler<
 
 export const CreateApplicationQueries = ({
   fs,
+  appDomain,
 }: QueriesFactoryDependencies): {
   queries: ApplicationQueries
 } => {
@@ -79,7 +80,7 @@ export const CreateApplicationQueries = ({
     >
 
     const query: QueryType = async () => {
-      const result = await handler(null, { fs })
+      const result = await handler(null, { fs, appDomain })
 
       if (isLeft(result)) {
         queryDebug('Error', result.left)

@@ -1,5 +1,5 @@
 import { File } from 'Application/types'
 
 export interface Fs {
-  allFiles: () => Promise<File[]>
+  allFiles: () => Promise<Omit<File, 'url'>[]>
 }

@@ -13,7 +13,6 @@ export interface FileStorage {
 }
 
 export const createLocalFileStorage = (storagePath: string): Fs => {
-
   const files = fs.readdirSync(storagePath)
   debug(`There are ${files.length} on folder ${storagePath}`)
 

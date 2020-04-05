@@ -3,6 +3,7 @@ import { ApplicationQueries, CreateApplicationQueries } from './queries'
 
 export interface ApplicationDependencies {
   fs: Fs
+  appDomain: string
 }
 
 export interface Application {
@@ -11,9 +12,11 @@ export interface Application {
 
 export function createApplication({
   fs,
+  appDomain,
 }: ApplicationDependencies): Application {
   const { queries } = CreateApplicationQueries({
     fs,
+    appDomain,
   })
 
   return {

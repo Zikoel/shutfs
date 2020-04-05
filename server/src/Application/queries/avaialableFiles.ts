@@ -9,10 +9,17 @@ export type Output = File[]
 
 export const Handler: QueryHandler<t.TypeOf<typeof Input>, Output> = async (
   _,
-  { fs }
+  { fs, appDomain }
 ) => {
   return fs
     .allFiles()
-    .then(right)
+    .then(storedFiles => {
+      const files: File[] = storedFiles.map(file => ({
+        ...file,
+        url: `${appDomain}/file/download/${encodeURI(file.name)}`,
+      }))
+
+      return right(files)
+    })
     .catch(left)
 }
