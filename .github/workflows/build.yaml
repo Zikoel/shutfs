@@ -8,16 +8,14 @@ on:
 
 jobs:
   build-server:
-
     runs-on: ubuntu-latest
-
     steps:
     - uses: actions/checkout@v2
     - name: 'Setup node'
       uses: actions/setup-node@v1
       with:
         node-version: '12.x'
-    - name: 'Install deps'
+    - run: yarn install
       working-directory: server
-      run: yarn install
     - run: yarn build
+      working-directory: server
