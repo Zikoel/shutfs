@@ -5,6 +5,6 @@
   "ext": "json,js,ts",
   "env": {
     "NODE_ENV": "development",
-    "DEBUG": "*, -babel*, -express*, -body-parser*, -compression*"
+    "DEBUG": "*, -send*, -babel*, -express*, -body-parser*, -compression*"
   }
 }

@@ -19,7 +19,7 @@ export const FrontendRouter = (): Router => {
    */
   const router = Router()
 
-  const frontendStaticFilesDirectory = path.resolve(clientCodeDirectory, 'dist')
+  const frontendStaticFilesDirectory = path.resolve(clientCodeDirectory, 'build')
 
   const cachedIndexFileContents = fs.readFileSync(
     path.resolve(frontendStaticFilesDirectory, 'index.html'),
