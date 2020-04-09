@@ -30,6 +30,7 @@ export default function HttpServer(config: HttpServerConfig): http.Server {
   debug(`Adding compression middleware`)
   app.use(compression())
 
+  debug(`WARNING: Cors * applied on all routes`)
   app.use(cors({ origin: '*' }))
 
   debug(`Adding PublicFiles router`)
