@@ -3,4 +3,5 @@ export interface RemoteFile {
   size: number
   createdAt: Date
   updatedAt: Date
+  url: string
 }
