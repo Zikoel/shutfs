@@ -1,8 +1,9 @@
 import { Router } from 'express'
 import { Application } from 'Application'
 import { isLeft } from 'fp-ts/lib/Either'
-import HttpErrors from 'http-errors'
+import createError from 'http-errors'
 import fs from 'fs'
+import path from 'path'
 import D from 'debug'
 
 const debug = D('adapters:http:files')
@@ -30,18 +31,33 @@ export const FilesRouter = ({
   router.get('/download/:filename', (req, res) => {
     const fileName = req.params.filename
 
+    const filePath = path.join(storagePath, fileName)
+    debug(`Request for file: ${filePath}`)
+    
+    // Check if there is a malicious action
+    if (!filePath.includes(storagePath)) {
+      debug(`Directory traversal attack ? with param: ${req.params.filename}`)
+      const err = new createError.Unauthorized('You can read only listed files')
+      
+      res.status(err.statusCode).send(err.message)
+
+      return
+    }
+
+    // Check the real user permission on file
     const canUserDownloadTheFile = true
 
     if (canUserDownloadTheFile) {
-      const filePath = `${storagePath}/${fileName}`
-      debug(`Served file: ${filePath}`)
-
       const stream = fs.createReadStream(filePath, { highWaterMark: 64 * 1024 })
       stream.pipe(res)
+      debug(`Served: ${filePath}`)
     } else {
-      res.send(HttpErrors.Unauthorized)
+      const err = new createError.Unauthorized('You miss permission for this file')
+      res.status(err.statusCode).send(err.message)
+      debug(`User can't access to file: ${filePath}`)
     }
   })
 
   return router
 }
+
