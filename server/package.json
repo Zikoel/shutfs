@@ -10,7 +10,8 @@
   "scripts": {
     "dev:start": "nodemon --exec ts-node --project tsconfig.json src/start.ts",
     "clean": "rm -rf dist",
-    "build": "run-s clean && tsc -p tsconfig.json"
+    "build": "run-s clean && tsc -p tsconfig.json",
+    "image:prod": "docker build .. -f ./docker/Prod.dockerfile -t docker.pkg.github.com/zikoel/shutfs:v$npm_package_version"
   },
   "dependencies": {
     "body-parser": "^1.19.0",
