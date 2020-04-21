@@ -23,7 +23,7 @@ export const FileList: React.FC<Props> = ({files}) => {
 
 
   const lastUpdate = files.length > 0 
-    ? files.reduce( (last, file) => file.updatedAt.getTime() > last.getTime() ? file.updatedAt : last, new Date() )
+    ? files.reduce( (last, file) => file.updatedAt.getTime() > last.getTime() ? file.updatedAt : last, new Date('1970-01-01') )
     : null
 
   const headerText = lastUpdate 
