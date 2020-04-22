@@ -3,6 +3,30 @@ on:
   release:
     types: [published]
 jobs:
+  build-server:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: 'Setup node'
+      uses: actions/setup-node@v1
+      with:
+        node-version: '12.x'
+    - run: yarn install
+      working-directory: server
+    - run: yarn build
+      working-directory: server
+  build-client:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: 'Setup node'
+      uses: actions/setup-node@v1
+      with:
+        node-version: '12.x'
+    - run: yarn install
+      working-directory: client
+    - run: yarn build
+      working-directory: client
   push_to_registry:
     name: Push Docker image to GitHub Packages
     runs-on: ubuntu-latest
