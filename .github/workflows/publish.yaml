@@ -19,7 +19,7 @@ jobs:
       uses: actions/upload-artifact@v1
       with:
         name: server-dist
-        path: dist
+        path: server/dist
   build-client:
     runs-on: ubuntu-latest
     steps:
@@ -36,7 +36,7 @@ jobs:
       uses: actions/upload-artifact@v1
       with:
         name: client-build
-        path: build
+        path: client/build
   push_to_registry:
     name: Push Docker image to GitHub Packages
     runs-on: ubuntu-latest
