@@ -61,7 +61,7 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
           registry: docker.pkg.github.com
-          repository: zikoel/shutfs/shutfs
+          repository: zikoel/shutfs
           tag_with_ref: true
           dockerfile: server/docker/Prod.dockerfile
 
