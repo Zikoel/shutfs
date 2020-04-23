@@ -55,15 +55,16 @@ jobs:
           name: client-build
           path: client/build
       - run: pwd && ls server
-      - name: Push to GitHub Packages
-        uses: docker/build-push-action@v1
-        with:
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
-          registry: docker.pkg.github.com
-          repository: zikoel/shutfs
-          tag_with_ref: true
-          dockerfile: server/docker/Prod.dockerfile
+      # github registry is actually not really public we wait for that
+      # - name: Push to GitHub Packages
+      #   uses: docker/build-push-action@v1
+      #   with:
+      #     username: ${{ github.actor }}
+      #     password: ${{ secrets.GITHUB_TOKEN }}
+      #     registry: docker.pkg.github.com
+      #     repository: zikoel/shutfs/shutfs
+      #     tag_with_ref: true
+      #     dockerfile: server/docker/Prod.dockerfile
       - name: Push to Docker Hub
         uses: docker/build-push-action@v1
         with:
