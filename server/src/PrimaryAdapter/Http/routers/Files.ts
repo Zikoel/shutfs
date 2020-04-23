@@ -6,7 +6,7 @@ import fs from 'fs'
 import path from 'path'
 import D from 'debug'
 
-const debug = D('adapters:http:files')
+const debug = D('app:primary-adapters:http:routers:files')
 
 export interface PublicFilesRouterConfig {
   application: Application

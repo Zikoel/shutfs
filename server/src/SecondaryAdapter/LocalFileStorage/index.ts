@@ -2,7 +2,7 @@ import D from 'debug'
 import fs from 'fs'
 import { Fs } from 'Application/ports'
 
-const debug = D('secondaryAdapters:local-file-storage')
+const debug = D('app:secondary-adapters:local-file-storage')
 
 export const createLocalFileStorage = (storagePath: string): Fs => {
   const files = fs.readdirSync(storagePath)

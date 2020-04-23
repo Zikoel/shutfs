@@ -8,7 +8,7 @@ import { Application } from '../../Application'
 import { FrontendRouter } from './routers/Frontend'
 import { FilesRouter } from './routers/Files'
 
-const debug = D('adapters:http')
+const debug = D('app:primary-adapters:http')
 
 interface HttpServerConfig {
   isProduction: boolean

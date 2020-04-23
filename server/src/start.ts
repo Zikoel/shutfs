@@ -4,7 +4,7 @@ import * as config from './config'
 import HTTPServer from './PrimaryAdapter/Http'
 import { createLocalFileStorage } from './SecondaryAdapter/LocalFileStorage'
 
-const debug = D('start')
+const debug = D('app:start')
 
 const init = async () => {
   const fsAdapter = createLocalFileStorage(config.STORAGE.path)
