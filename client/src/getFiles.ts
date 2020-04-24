@@ -1,9 +1,10 @@
 import { RemoteFile } from "./types"
 import axios from 'axios'
+import { endpoints } from "./constants/endpoints"
 
 export const getFiles = async (): Promise<RemoteFile[]> => {
 
-  return axios.get( 'http://localhost:5000/file/list' )
+  return axios.get( endpoints.filesList )
     .then( response => response.data || [])
     .then( files => files.map( (f: any) => ({
       ...f,
@@ -12,6 +13,5 @@ export const getFiles = async (): Promise<RemoteFile[]> => {
     })))
     .catch(err => {
       console.log('We have a problem ', JSON.stringify(err, null, 2))
-    })
-  
+    }) 
 }
