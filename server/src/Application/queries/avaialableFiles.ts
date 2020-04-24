@@ -16,7 +16,7 @@ export const Handler: QueryHandler<t.TypeOf<typeof Input>, Output> = async (
     .then(storedFiles => {
       const files: File[] = storedFiles.map(file => ({
         ...file,
-        url: `${appDomain}/file/download/${encodeURI(file.name)}`,
+        url: `${appDomain}file/download/${encodeURI(file.name)}`,
       }))
 
       return right(files)
