@@ -49,6 +49,7 @@ export const FilesRouter = ({
 
     if (canUserDownloadTheFile) {
       const stream = fs.createReadStream(filePath, { highWaterMark: 64 * 1024 })
+      res.setHeader('Content-Length', fs.statSync(filePath).size)
       stream.pipe(res)
       debug(`Served: ${filePath}`)
     } else {
