@@ -8,7 +8,7 @@
   "license": "SEE LICENSE IN LICENZE FILE",
   "private": false,
   "scripts": {
-    "dev:start": "nodemon --exec ts-node --project tsconfig.json src/start.ts",
+    "dev": "export $(grep -v '^#' .env | xargs) && APP_VERSION=$npm_package_version nodemon --exec ts-node --project tsconfig.json src/start.ts",
     "clean": "rm -rf dist",
     "build": "run-s clean && tsc -p tsconfig.json",
     "image:prod": "docker build .. -f ./docker/Prod.dockerfile -t zikoel/shutfs:v$npm_package_version"

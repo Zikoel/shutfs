@@ -4,7 +4,7 @@ import express, { Request, Response } from 'express'
 import http from 'http'
 import cors from 'cors'
 
-import { Application } from '../../Application'
+import { Core } from '../../core'
 import { FrontendRouter } from './routers/Frontend'
 import { FilesRouter } from './routers/Files'
 
@@ -12,12 +12,12 @@ const debug = D('app:primary-adapters:http')
 
 interface HttpServerConfig {
   isProduction: boolean
-  application: Application
+  core: Core
   storagePath: string
 }
 
 export default function HttpServer(config: HttpServerConfig): http.Server {
-  const { isProduction, application, storagePath } = config
+  const { isProduction, core, storagePath } = config
 
   const app = express()
 
@@ -34,7 +34,7 @@ export default function HttpServer(config: HttpServerConfig): http.Server {
   app.use(cors({ origin: '*' }))
 
   debug(`Adding PublicFiles router`)
-  app.use('/file', FilesRouter({ application, storagePath }))
+  app.use('/file', FilesRouter({ core, storagePath }))
 
   debug(`Adding Frontend router`)
   app.use(FrontendRouter())
