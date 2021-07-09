@@ -1,10 +1,13 @@
+import { absolutePath } from './validators/absolutePath'
 import envalid, { port, str } from 'envalid'
 
 const env = envalid.cleanEnv(
   process.env,
   {
     PORT: port({ default: 5000, desc: 'The port where to listen' }),
-    STORAGE_PATH: str({ desc: 'the root folder of your data' }),
+    STORAGE_PATH: absolutePath({
+      desc: 'The root folder must be absolute path',
+    }),
     APP_DOMAIN: str({
       default: '/',
       desc: 'the domain of your app, default /',

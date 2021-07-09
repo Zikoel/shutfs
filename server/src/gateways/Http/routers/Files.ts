@@ -33,7 +33,10 @@ export const FilesRouter = ({
 
     // Check if there is a malicious action
     if (!filePath.includes(storagePath)) {
-      debug(`Directory traversal attack ? with param: ${req.params.filename}`)
+      debug(`Directory traversal attack ? with params:`)
+      debug(`  filename: ${req.params.filename}`)
+      debug(`  filePath: ${filePath}`)
+      debug(`  storagePath: ${storagePath}`)
       const err = new createError.Unauthorized('You can read only listed files')
 
       res.status(err.statusCode).send(err.message)
