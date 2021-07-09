@@ -1,6 +1,5 @@
 import { Router } from 'express'
 import { Core } from '../../../core'
-import { isLeft } from 'fp-ts/lib/Either'
 import createError from 'http-errors'
 import fs from 'fs'
 import path from 'path'
@@ -19,13 +18,11 @@ export const FilesRouter = ({
 }: PublicFilesRouterConfig): Router => {
   const router = Router()
 
-  router.get('/list', (_, res, next) => {
+  router.get('/list', (_, res) => {
     debug(`Showed file list`)
-    core
-      .avaialableFiles()
-      .then(result =>
-        isLeft(result) ? next(result.left) : res.json(result.right)
-      )
+    core.avaialableFiles().then(result => {
+      return res.json(result)
+    })
   })
 
   router.get('/download/:filename', (req, res) => {

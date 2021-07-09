@@ -1,5 +1,4 @@
 import { Fs } from 'core/entity-gateway'
-import { left, right } from 'fp-ts/lib/Either'
 import { File } from '../entities'
 
 interface Deps {
@@ -10,15 +9,12 @@ interface Deps {
 export type Output = File[]
 
 export const makeUseCase = ({ fs, appDomain }: Deps) => () => {
-  return fs
-    .allFiles()
-    .then(storedFiles => {
-      const files: File[] = storedFiles.map(file => ({
-        ...file,
-        url: `${appDomain}file/download/${encodeURI(file.name)}`,
-      }))
+  return fs.allFiles().then(storedFiles => {
+    const files: File[] = storedFiles.map(file => ({
+      ...file,
+      url: `${appDomain}file/download/${encodeURI(file.name)}`,
+    }))
 
-      return right(files)
-    })
-    .catch(left)
+    return files
+  })
 }

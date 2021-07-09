@@ -4,8 +4,11 @@ const env = envalid.cleanEnv(
   process.env,
   {
     PORT: port({ default: 5000, desc: 'The port where to listen' }),
-    STORAGE_PATH: str({ default: '/data' }),
-    APP_DOMAIN: str({ default: '/' }),
+    STORAGE_PATH: str({ desc: 'the root folder of your data' }),
+    APP_DOMAIN: str({
+      default: '/',
+      desc: 'the domain of your app, default /',
+    }),
   },
   { strict: true }
 )
