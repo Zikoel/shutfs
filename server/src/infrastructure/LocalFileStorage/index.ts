@@ -1,6 +1,6 @@
 import D from 'debug'
 import fs from 'fs'
-import { Fs } from 'Application/ports'
+import { Fs } from '../../core/ports'
 
 const debug = D('app:secondary-adapters:local-file-storage')
 

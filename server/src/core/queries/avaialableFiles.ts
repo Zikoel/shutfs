@@ -1,7 +1,7 @@
 import { left, right } from 'fp-ts/lib/Either'
 import * as t from 'io-ts'
 import { QueryHandler } from '.'
-import { File } from 'Application/types'
+import { File } from '../types'
 
 export const Input = t.null
 

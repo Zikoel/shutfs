@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import { Application } from 'Application'
+import { Core } from '../../../core'
 import { isLeft } from 'fp-ts/lib/Either'
 import createError from 'http-errors'
 import fs from 'fs'
@@ -9,19 +9,19 @@ import D from 'debug'
 const debug = D('app:primary-adapters:http:routers:files')
 
 export interface PublicFilesRouterConfig {
-  application: Application
+  core: Core
   storagePath: string
 }
 
 export const FilesRouter = ({
-  application,
+  core,
   storagePath,
 }: PublicFilesRouterConfig): Router => {
   const router = Router()
 
   router.get('/list', (_, res, next) => {
     debug(`Showed file list`)
-    application.queries
+    core.queries
       .avaialableFiles(null)
       .then(result =>
         isLeft(result) ? next(result.left) : res.json(result.right)
@@ -33,12 +33,12 @@ export const FilesRouter = ({
 
     const filePath = path.join(storagePath, fileName)
     debug(`Request for file: ${filePath}`)
-    
+
     // Check if there is a malicious action
     if (!filePath.includes(storagePath)) {
       debug(`Directory traversal attack ? with param: ${req.params.filename}`)
       const err = new createError.Unauthorized('You can read only listed files')
-      
+
       res.status(err.statusCode).send(err.message)
 
       return
@@ -53,7 +53,9 @@ export const FilesRouter = ({
       stream.pipe(res)
       debug(`Served: ${filePath}`)
     } else {
-      const err = new createError.Unauthorized('You miss permission for this file')
+      const err = new createError.Unauthorized(
+        'You miss permission for this file'
+      )
       res.status(err.statusCode).send(err.message)
       debug(`User can't access to file: ${filePath}`)
     }
@@ -61,4 +63,3 @@ export const FilesRouter = ({
 
   return router
 }
-

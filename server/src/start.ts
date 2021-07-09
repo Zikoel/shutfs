@@ -1,22 +1,22 @@
 import D from 'debug'
-import { createApplication } from './Application'
+import { makeCore } from './core'
 import * as config from './config'
-import HTTPServer from './PrimaryAdapter/Http'
-import { createLocalFileStorage } from './SecondaryAdapter/LocalFileStorage'
+import HTTPServer from './gateways/Http'
+import { createLocalFileStorage } from './infrastructure/LocalFileStorage'
 
 const debug = D('app:start')
 
 const init = async () => {
   const fsAdapter = createLocalFileStorage(config.STORAGE.path)
 
-  const application = createApplication({
+  const core = makeCore({
     fs: fsAdapter,
     appDomain: config.SERVICE.domain,
   })
 
   const httpServer = HTTPServer({
     isProduction: config.IS_PRODUCTION,
-    application,
+    core,
     storagePath: config.STORAGE.path,
   })
 
