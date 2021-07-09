@@ -1,19 +1,13 @@
-import { Fs } from './ports'
-import { CreateApplicationQueries } from './queries'
+import * as AvaialableFiles from './use-cases/avaialableFiles'
 
-export interface Deps {
-  fs: Fs
-  appDomain: string
-}
+import { Deps } from './entity-gateway'
 
-export function makeCore({ fs, appDomain }: Deps) {
-  const { queries } = CreateApplicationQueries({
-    fs,
-    appDomain,
-  })
+export function makeCore(deps: Deps) {
+  // We initialize all the useCases
+  const avaialableFiles = AvaialableFiles.makeUseCase({ ...deps })
 
   return {
-    queries,
+    avaialableFiles,
   }
 }
 

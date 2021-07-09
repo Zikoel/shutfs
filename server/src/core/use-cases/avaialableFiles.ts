@@ -1,16 +1,15 @@
+import { Fs } from 'core/entity-gateway'
 import { left, right } from 'fp-ts/lib/Either'
-import * as t from 'io-ts'
-import { QueryHandler } from '.'
-import { File } from '../types'
+import { File } from '../entities'
 
-export const Input = t.null
+interface Deps {
+  fs: Fs
+  appDomain: string
+}
 
 export type Output = File[]
 
-export const Handler: QueryHandler<t.TypeOf<typeof Input>, Output> = async (
-  _,
-  { fs, appDomain }
-) => {
+export const makeUseCase = ({ fs, appDomain }: Deps) => () => {
   return fs
     .allFiles()
     .then(storedFiles => {

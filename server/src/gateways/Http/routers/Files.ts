@@ -21,8 +21,8 @@ export const FilesRouter = ({
 
   router.get('/list', (_, res, next) => {
     debug(`Showed file list`)
-    core.queries
-      .avaialableFiles(null)
+    core
+      .avaialableFiles()
       .then(result =>
         isLeft(result) ? next(result.left) : res.json(result.right)
       )
