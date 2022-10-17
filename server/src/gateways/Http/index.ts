@@ -2,7 +2,6 @@ import compression from 'compression'
 import D from 'debug'
 import express, { Request, Response } from 'express'
 import http from 'http'
-import cors from 'cors'
 
 import { Core } from '../../core'
 import { FrontendRouter } from './routers/Frontend'
@@ -27,11 +26,7 @@ export default function HttpServer(config: HttpServerConfig): http.Server {
     app.enable('trust proxy')
   }
 
-  debug(`Adding compression middleware`)
   app.use(compression())
-
-  debug(`WARNING: Cors * applied on all routes`)
-  app.use(cors({ origin: '*' }))
 
   debug(`Adding PublicFiles router`)
   app.use('/file', FilesRouter({ core, storagePath }))

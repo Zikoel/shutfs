@@ -13,7 +13,6 @@ const env = envalid.cleanEnv(
       desc: 'the domain of your app, default /',
     }),
   },
-  { strict: true }
 )
 
 export const IS_PRODUCTION = env.isProduction
