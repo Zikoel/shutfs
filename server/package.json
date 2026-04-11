@@ -11,45 +11,40 @@
     "dev": "export $(grep -v '^#' .env | xargs) && APP_VERSION=$npm_package_version nodemon --exec ts-node --project tsconfig.json src/start.ts",
     "clean": "rm -rf dist",
     "build": "run-s clean && tsc -p tsconfig.json",
+    "check": "biome check ./src",
+    "format": "biome format ./src --write",
     "image:prod": "docker build .. -f ./docker/Prod.dockerfile -t zikoel/shutfs:v$npm_package_version"
   },
   "dependencies": {
-    "body-parser": "^1.20.1",
-    "compression": "^1.7.4",
-    "debug": "^4.3.4",
-    "envalid": "^7.3.1",
-    "express": "^4.18.2",
-    "fp-ts": "^2.12.3",
+    "compression": "^1.8.0",
+    "debug": "^4.4.0",
+    "envalid": "^8.0.0",
+    "express": "^5.1.0",
+    "fp-ts": "^2.16.9",
     "http-errors": "^2.0.0",
-    "io-ts": "^2.2.19",
+    "io-ts": "^2.2.21",
     "io-ts-types": "^0.5.19",
-    "lodash": "^4.17.21",
-    "moment": "^2.29.4"
+    "lodash": "^4.17.21"
   },
   "devDependencies": {
-    "@types/compression": "^1.7.2",
-    "@types/debug": "^4.1.7",
-    "@types/express": "^4.17.14",
-    "@types/fs-extra": "^9.0.13",
-    "@types/http-errors": "^1.8.2",
-    "@types/jest": "^29.1.2",
-    "@types/lodash": "^4.14.186",
-    "@typescript-eslint/eslint-plugin": "~5.40.0",
-    "@typescript-eslint/parser": "~5.40.0",
-    "eslint": "^8.25.0",
-    "eslint-config-prettier": "^8.5.0",
-    "eslint-plugin-jest": "^27.1.2",
-    "eslint-plugin-prettier": "^4.2.1",
-    "jest": "^29.2.0",
-    "nodemon": "^2.0.20",
+    "@biomejs/biome": "^1.9.4",
+    "@types/compression": "^1.7.5",
+    "@types/debug": "^4.1.12",
+    "@types/express": "^5.0.0",
+    "@types/http-errors": "^2.0.4",
+    "@types/jest": "^29.5.14",
+    "@types/lodash": "^4.17.14",
+    "@types/node": "^22.0.0",
+    "jest": "^29.7.0",
+    "nodemon": "^3.1.9",
     "npm-run-all": "^4.1.5",
-    "prettier": "^2.7.1",
-    "ts-jest": "^29.0.3",
-    "ts-node": "^10.9.1",
-    "tsconfig-paths": "^4.1.0",
-    "typescript": "^4.8.4"
+    "ts-jest": "^29.2.5",
+    "ts-node": "^10.9.2",
+    "tsconfig-paths": "^4.2.0",
+    "typescript": "^5.7.3"
   },
-  "peerDependencies": {
-    "@types/node": "^11.13.8"
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e",
+  "resolutions": {
+    "@types/express": "^5.0.0"
   }
 }

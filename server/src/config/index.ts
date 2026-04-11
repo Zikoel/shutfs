@@ -1,7 +1,7 @@
 import { absolutePath } from './validators/absolutePath'
-import envalid, { port, str } from 'envalid'
+import { cleanEnv, port, str } from 'envalid'
 
-const env = envalid.cleanEnv(
+const env = cleanEnv(
   process.env,
   {
     PORT: port({ default: 5000, desc: 'The port where to listen' }),

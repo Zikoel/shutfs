@@ -40,7 +40,7 @@ export const FrontendRouter = (): Router => {
    * Then for every other route reached through GET reqs
    * we serve the index.html contents
    */
-  router.get('*', (_, res) => res.send(cachedIndexFileContents))
+  router.get('/*path', (_, res) => res.send(cachedIndexFileContents))
 
   return router
 }

@@ -1,6 +1,6 @@
 import compression from 'compression'
 import D from 'debug'
-import express, { Request, Response } from 'express'
+import express, { NextFunction, Request, Response } from 'express'
 import http from 'http'
 
 import { Core } from '../../core'
@@ -26,7 +26,7 @@ export default function HttpServer(config: HttpServerConfig): http.Server {
     app.enable('trust proxy')
   }
 
-  app.use(compression())
+  app.use(compression() as express.RequestHandler)
 
   debug(`Adding PublicFiles router`)
   app.use('/file', FilesRouter({ core, storagePath }))
@@ -34,7 +34,7 @@ export default function HttpServer(config: HttpServerConfig): http.Server {
   debug(`Adding Frontend router`)
   app.use(FrontendRouter())
 
-  app.use((err: any, req: Request, res: Response) => {
+  app.use((err: any, req: Request, res: Response, _next: NextFunction) => {
     debug(
       `Uncaught HTTP error @ ${req.originalUrl}: [${err.name}] ${err.message}`
     )

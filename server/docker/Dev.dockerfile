@@ -1,12 +1,11 @@
-FROM node:12.16-stretch
+FROM node:22-alpine
 
-LABEL Elia Mazzuoli <zikoel@gmail.com>
+LABEL maintainer="Elia Mazzuoli <zikoel@gmail.com>"
 
 WORKDIR /app
 
-# Add dumb-init to receive SIGINT and SIGTERM signals
-RUN wget -O /usr/local/bin/dumb-init https://github.com/Yelp/dumb-init/releases/download/v1.2.0/dumb-init_1.2.0_amd64
-RUN chmod +x /usr/local/bin/dumb-init
+# dumb-init is available in Alpine's package manager
+RUN apk add --no-cache dumb-init
 
 # Install dependencies
 COPY package.json package.json
@@ -21,4 +20,4 @@ RUN mkdir /app_logs
 ENV PATH="/app/node_modules/.bin:${PATH}"
 
 EXPOSE 5000
-ENTRYPOINT ["/usr/local/bin/dumb-init", "--"]
+ENTRYPOINT ["/usr/bin/dumb-init", "--"]

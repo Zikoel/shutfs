@@ -1,45 +1,49 @@
-import React from "react"
-import { Grid, Paper, TableContainer, TableHead, TableRow, TableCell, Table, TableBody, IconButton, makeStyles, createStyles } from '@material-ui/core'
-import { CloudDownload } from '@material-ui/icons';
-import moment from 'moment'
+import React from 'react'
+import {
+  Grid,
+  IconButton,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+} from '@mui/material'
+import { CloudDownload } from '@mui/icons-material'
+import dayjs from 'dayjs'
 
-import { RemoteFile } from "../../types/RemoteFile"
-
-const useTableCellStyles = makeStyles(theme =>
-  createStyles({
-    sizeSmall: {
-      padding: '0px 10px 0px 10px',
-    },
-  })
-)
+import { RemoteFile } from '../../types/RemoteFile'
 
 interface Props {
   files: RemoteFile[]
 }
 
-export const FileList: React.FC<Props> = ({files}) => {
+const cellSx = { padding: '0px 10px' }
 
-  const tableCellClasses = useTableCellStyles()
+export const FileList: React.FC<Props> = ({ files }) => {
+  const lastUpdate =
+    files.length > 0
+      ? files.reduce(
+          (last, file) =>
+            file.updatedAt.getTime() > last.getTime() ? file.updatedAt : last,
+          new Date('1970-01-01')
+        )
+      : null
 
-
-  const lastUpdate = files.length > 0 
-    ? files.reduce( (last, file) => file.updatedAt.getTime() > last.getTime() ? file.updatedAt : last, new Date('1970-01-01') )
-    : null
-
-  const headerText = lastUpdate 
+  const headerText = lastUpdate
     ? `Last update ${formatDate(lastUpdate)}`
     : 'Folder empty'
 
   return (
     <Grid container direction='column'>
-
-      <Grid item sm style={{margin: 10}}>
-        <Paper style={{padding: 10}}>{headerText}</Paper>
+      <Grid item sm style={{ margin: 10 }}>
+        <Paper style={{ padding: 10 }}>{headerText}</Paper>
       </Grid>
 
-      <Grid item sm style={{margin: 10}}>
-        <TableContainer component={Paper} >
-          <Table size="small">
+      <Grid item sm style={{ margin: 10 }}>
+        <TableContainer component={Paper}>
+          <Table size='small'>
             <TableHead>
               <TableRow>
                 <TableCell />
@@ -49,12 +53,12 @@ export const FileList: React.FC<Props> = ({files}) => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {files.map(file => (
+              {files.map((file) => (
                 <TableRow key={file.name}>
-                  <TableCell classes={tableCellClasses} align="left">
+                  <TableCell sx={cellSx} align='left'>
                     <IconButton
                       type='button'
-                      aria-label='search'
+                      aria-label='download'
                       href={file.url}
                       download={file.name}
                       target='_blank'
@@ -63,34 +67,37 @@ export const FileList: React.FC<Props> = ({files}) => {
                       <CloudDownload fontSize='small' />
                     </IconButton>
                   </TableCell>
-                  <TableCell classes={tableCellClasses} component="th" scope="row">
+                  <TableCell sx={cellSx} component='th' scope='row'>
                     {formatDate(file.updatedAt)}
                   </TableCell>
-                  <TableCell classes={tableCellClasses} align="left">{formatBytes(file.size)}</TableCell>
-                  <TableCell classes={tableCellClasses} align="left">{file.name}</TableCell>
+                  <TableCell sx={cellSx} align='left'>
+                    {formatBytes(file.size)}
+                  </TableCell>
+                  <TableCell sx={cellSx} align='left'>
+                    {file.name}
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
         </TableContainer>
       </Grid>
-
     </Grid>
   )
 }
 
 function formatDate(date: Date): string {
-  return moment(date).format('DD/MM/YYYY HH:mm:ss')
+  return dayjs(date).format('DD/MM/YYYY HH:mm:ss')
 }
 
-function formatBytes(bytes: number, decimals: number = 2) {
-  if (bytes === 0) return '0 Bytes';
+function formatBytes(bytes: number, decimals = 2) {
+  if (bytes === 0) return '0 Bytes'
 
-  const k = 1024;
-  const dm = decimals < 0 ? 0 : decimals;
-  const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+  const k = 1024
+  const dm = decimals < 0 ? 0 : decimals
+  const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
 
-  const i = Math.floor(Math.log(bytes) / Math.log(k));
+  const i = Math.floor(Math.log(bytes) / Math.log(k))
 
-  return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+  return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i]
 }
